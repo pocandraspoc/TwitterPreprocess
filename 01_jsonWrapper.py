@@ -1,13 +1,15 @@
 import os
 import re
 import ujson
-from pprint import pprint
 
 def replace_links(tweet_string):
-	links = re.findall("(?P<url>https?://[^\s]+)", tweet_string)
-	for link in links:
-		tweet_string = tweet_string.replace(link, "")
-	return tweet_string
+	try:
+		links = re.findall("(?P<url>https?://[^\s]+)", tweet_string)
+		for link in links:
+			tweet_string = tweet_string.replace(link, "")
+		return tweet_string
+	except AttributeError:
+		pass
 
 def strip(input_file, output_file):
 	with open(input_file) as infile, open(output_file, 'a+') as outfile:
@@ -23,10 +25,7 @@ def strip(input_file, output_file):
 				if (tweet[0:3]) != "RT ": 
 					tweet = re.sub(r'\n', ' ', tweet)
 					tweet = re.sub(r'  ', ' ', tweet)
-					try:
-						tweet = replace_links(tweet)
-					except AttributeError:
-						pass
+					tweet = replace_links(tweet)
 					tweet = tweet.encode('utf-8')
 					outfile.write(tweet +"\n")
 			except KeyError:
