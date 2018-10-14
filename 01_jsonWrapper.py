@@ -27,7 +27,7 @@ def strip(input_file, output_file):
 					tweet = re.sub(r'  ', ' ', tweet)
 					tweet = replace_links(tweet)
 					tweet = tweet.encode('utf-8')
-					outfile.write(tweet +"\n")
+					outfile.write(str(tweet) +"\n")
 			except KeyError:
 				continue
 			continue
@@ -39,14 +39,17 @@ def only_files(path):
 	for file in os.listdir(path):
 		if os.path.isfile(os.path.join(path, file)):
 			yield file
-
+#DATA IDR:
+#
+input_dir='/home/my/Desktop/B'
 def main():
-	os.chdir('/home/my/Downloads/')
-	for dirname in os.listdir('.'):
+	os.chdir(input_dir)
+	for counter, dirname in enumerate(os.listdir('.')):
+		print(counter)
 		subdir = os.getcwd()+'/'+dirname
 		os.chdir(subdir)
 		for file in only_files(subdir):
-			strip(file, 'stripped_' + dirname + '.txt')
-		os.chdir('/home/my/Downloads/')
+			strip(file, 'stripped_' + str(dirname) + '.txt')
+		os.chdir(input_dir)
 		
 main()

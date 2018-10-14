@@ -12,9 +12,9 @@ def concatenate_file_lines(input_file, output_file):
 	infile.close()
 	outfile.close()
 
-def list_tweet_text_files():
+def list_tweet_text_files(input_dir='/home/my/Downloads/'):
 	list_= []
-	os.chdir('/home/my/Downloads/')
+	os.chdir(input_dir)
 	for dirname in os.listdir('.'):
 		subdir = os.getcwd()+'/'+dirname
 		os.chdir(subdir)
@@ -25,14 +25,14 @@ def list_tweet_text_files():
 			full_path = os.path.join(os.getcwd(), filename)
 			#print (full_path)
 			list_.append(full_path)
-		os.chdir('/home/my/Downloads/')
+		os.chdir(input_dir)
 	return list_
 
-def main():
-	os.chdir('/home/my/Dow_tw/')
+def main(output_dir='/home/my/Dow_tw/'):
+	os.chdir(output_dir)
 	for elem in list_tweet_text_files():
 		#print(elem)
-		os.chdir('/home/my/Dow_tw/')
+		os.chdir(output_dir)
 		concatenate_file_lines(elem, "conc.txt")
 		os.remove(elem)
 
